@@ -1,7 +1,12 @@
+import Nave.BaseEnemy;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Background {
-    private double [] X;
-    private double [] Y;
-    private double speed;
+    private final double [] X;
+    private final double [] Y;
+    private final double speed;
     private double count;
 
     public Background(int x, double speed) {

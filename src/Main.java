@@ -69,7 +69,7 @@ public class Main {
 		/* variáveis do player */
 		
 		int player_state = ACTIVE;								// estado
-		double player_X = GameLib.WIDTH / 2;					// coordenada x
+		double player_X = GameLib.WIDTH / 2.0;					// coordenada x
 		double player_Y = GameLib.HEIGHT * 0.90;				// coordenada y
 		double player_VX = 0.25;								// velocidade no eixo x
 		double player_VY = 0.25;								// velocidade no eixo y
