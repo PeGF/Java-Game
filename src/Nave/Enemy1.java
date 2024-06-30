@@ -18,8 +18,8 @@ public class Enemy1 extends BaseEnemy{
 
     @Override
     public void updatePosition(long delta) {
-        x += v * Math.cos(angle) * delta;
-        y += v * Math.sin(angle) * delta * (-1.0);
+        x += v * Math.cos(angle) * delta ;
+        y += v * Math.sin(angle) * delta * (-1.0) ;
     }
 
     public void shoot(double angle){

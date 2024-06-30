@@ -93,11 +93,14 @@ public class Main {
 
 		/* variáveis dos projéteis disparados pelo player */
 
+		/*
 		int [] projectile_states = new int[10];					// estados
 		double [] projectile_X = new double[10];				// coordenadas x
 		double [] projectile_Y = new double[10];				// coordenadas y
 		double [] projectile_VX = new double[10];				// velocidades no eixo x
 		double [] projectile_VY = new double[10];				// velocidades no eixo y
+
+		 */
 
 		/* variáveis dos inimigos tipo 1 */
 
@@ -316,19 +319,18 @@ public class Main {
 
 			/* projeteis (player) */
 
-			for(int i = 0; i < projectile_states.length; i++){
+			for(Bullet player_bullet : player_bullets.getBullets()){
 
-				if(projectile_states[i] == ACTIVE){
+				if(player_bullet.getState() == ACTIVE){
 
 					/* verificando se projétil saiu da tela */
-					if(projectile_Y[i] < 0) {
+					if(player_bullet.getY() < 0) {
 
-						projectile_states[i] = INACTIVE;
+						player_bullet.setState(INACTIVE);
 					}
 					else {
 
-						projectile_X[i] += projectile_VX[i] * delta;
-						projectile_Y[i] += projectile_VY[i] * delta;
+						player_bullet.updatePosition(delta);
 					}
 				}
 			}
@@ -561,14 +563,14 @@ public class Main {
 
 			/* deenhando projeteis (player) */
 
-			for(int i = 0; i < projectile_states.length; i++){
+			for(Bullet bullets : player_bullets.getBullets()){
 
-				if(projectile_states[i] == ACTIVE){
+				if(bullets.getState() == ACTIVE){
 
 					GameLib.setColor(Color.GREEN);
-					GameLib.drawLine(projectile_X[i], projectile_Y[i] - 5, projectile_X[i], projectile_Y[i] + 5);
-					GameLib.drawLine(projectile_X[i] - 1, projectile_Y[i] - 3, projectile_X[i] - 1, projectile_Y[i] + 3);
-					GameLib.drawLine(projectile_X[i] + 1, projectile_Y[i] - 3, projectile_X[i] + 1, projectile_Y[i] + 3);
+					GameLib.drawLine(bullets.getX(), bullets.getY() - 5, bullets.getX(), bullets.getY() + 5);
+					GameLib.drawLine(bullets.getX() - 1, bullets.getY() - 3, bullets.getX() - 1, bullets.getY() + 3);
+					GameLib.drawLine(bullets.getX() + 1, bullets.getY() - 3, bullets.getX() + 1, bullets.getY() + 3);
 				}
 			}
 

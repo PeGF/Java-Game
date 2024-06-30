@@ -35,6 +35,30 @@ public class Bullet {
         return state;
     }
 
+    public void setAngle(double angle) {
+        this.angle = angle;
+    }
+
+    public void setVy(double vy) {
+        this.vy = vy;
+    }
+
+    public void setVx(double vx) {
+        this.vx = vx;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public void updatePosition(long delta) {
         // Atualiza a posição da bala com base na velocidade e no tempo passado (delta)
         x += vx * delta;
