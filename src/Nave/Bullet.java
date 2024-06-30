@@ -17,8 +17,8 @@ public class Bullet {
         this.state = ACTIVE;
         this.x = x;
         this.y = y;
-        this.vx = vx;
-        this.vy = vy;
+        this.vx = vx * 0.5; //Por algum motivo, precisamo resuzir a velocidade
+        this.vy = vy * 0.5; //das balas para ficar igual a antes ¯\_(ツ)_/¯
         this.radius = radius;
     }
 
