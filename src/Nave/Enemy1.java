@@ -12,7 +12,7 @@ public class Enemy1 extends BaseEnemy{
         next_shoot =  0;
         next_enemy = currentTime + 2000;
         bullet_vx = Math.cos(getAngle()) * 0.45;
-        bullet_vy = Math.sin(getAngle()) * 0.15 * (-1);
+        bullet_vy = Math.sin(getAngle()) * 0.45 * (-1);
         this.bulletsManager = bulletsManager;
     }
 

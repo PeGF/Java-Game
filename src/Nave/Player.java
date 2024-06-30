@@ -18,7 +18,7 @@ public class Player {
     private long proximo_tiro;      //instante a partir do qual pode haver um próximo tiro
     private final BulletsManager bulletsManager;
 
-    public Player(double x, double y, BulletsManager bulletsManager){
+    public Player(double x, double y, BulletsManager bulletsManager, long current_time){
         this.state = ACTIVE;
 
         this.x = x / 2;
@@ -29,7 +29,7 @@ public class Player {
 
         this.comeco_explosao = 0;
         this.final_explosao = 0;
-        this.proximo_tiro = System.currentTimeMillis();
+        this.proximo_tiro = current_time;
         this.bulletsManager = bulletsManager;
 
     }
@@ -80,7 +80,7 @@ public class Player {
 
     public void shoot(){
         if(canShoot()){
-            bulletsManager.addBullet(new Bullet(x, y, 1, 0, radius)); //projetil nao se move no eixo x
+            bulletsManager.addBullet(new Bullet(x, y - 2 * radius, 0, -1, radius)); //projetil nao se move no eixo x
             proximo_tiro = System.currentTimeMillis() + 500; //0.5s de intervalo
         }
     }

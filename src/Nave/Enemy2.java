@@ -71,4 +71,6 @@ public class Enemy2 extends BaseEnemy {
     public void setBullet_radius(double bullet_radius) {
         this.bullet_radius = bullet_radius;
     }
+
+
 }
