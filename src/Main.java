@@ -1,4 +1,5 @@
 import Nave.BaseEnemy;
+import Nave.BulletsManager;
 import Nave.Enemy1;
 import Nave.Enemy2;
 import java.util.Iterator;
@@ -131,12 +132,18 @@ public class Main {
 
 		/* variáveis dos projéteis lançados pelos inimigos (tanto tipo 1, quanto tipo 2) */
 
+		/*
 		int [] e_projectile_states = new int[200];				// estados
 		double [] e_projectile_X = new double[200];				// coordenadas x
 		double [] e_projectile_Y = new double[200];				// coordenadas y
 		double [] e_projectile_VX = new double[200];			// velocidade no eixo x
 		double [] e_projectile_VY = new double[200];			// velocidade no eixo y
 		double e_projectile_radius = 2.0;						// raio (tamanho dos projéteis inimigos)
+
+		 */
+
+		int enemy_max_bullets = 200;
+		BulletsManager enemy_bullets = new BulletsManager(enemy_max_bullets);
 
 		/* estrelas que formam o fundo de primeiro plano */
 
@@ -457,6 +464,7 @@ public class Main {
 
 								}
 							}
+							enemy.setShootNow(false);
 						}
 					}
 				}
@@ -482,7 +490,7 @@ public class Main {
 
 				if(enemies2.size() < enemyQuantity){
 
-					enemies2.add(new Enemy2(ACTIVE, GameLib.WIDTH * 0.20, -10.0, 0.42, 0.0, currentTime));
+					enemies2.add(new Enemy2(ACTIVE, GameLib.WIDTH * 0.20, -10.0, 0.42, 0.0, currentTime, enemy_bullets));
 					Enemy2 lastAddedEnemy = enemies2.get(enemies2.size() - 1);
 
 					if(Enemy2.getCount() < 10){

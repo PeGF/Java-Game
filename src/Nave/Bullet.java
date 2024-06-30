@@ -5,28 +5,41 @@ public class Bullet {
     public static final int ACTIVE = 1;
 
     protected int state;
-    public static int max_bullets;
-    protected double x;
-    protected double y;
-    private final double vx;
-    private final double vy;
+    private double x;
+    private double y;
+    private double v;
+    private double angle;
     private final double radius;
 
 
     public Bullet(double x, double y, double vx, double vy, double radius) {
-        this.state = ACTIVE;
+        this.state = INACTIVE;
         this.x = x;
         this.y = y;
-        this.vx = vx;
-        this.vy = vy;
+        this.v = v;
         this.radius = radius;
     }
 
-    public double getX() { return x; }
-    public double getY() { return y; }
-    public double getRadius() { return radius; }
-    public int getState() { return state; }
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+    public double getRadius() {
+        return radius;
+    }
+    public int getState() {
+        return state;
+    }
 
+    public void updatePosition(long delta) {
+        // Atualiza a posição da bala com base na velocidade e no tempo passado (delta)
+        x += v * Math.cos(angle) * delta;
+        y += v * Math.sin(angle) * delta;
+    }
+
+    /*
     public void update(int height, int width) {
         if (state == ACTIVE) {
             x += vx;
@@ -36,4 +49,6 @@ public class Bullet {
             }
         }
     }
+     */
+
 }
