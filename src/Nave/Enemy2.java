@@ -5,7 +5,6 @@ public class Enemy2 extends BaseEnemy {
     private double RV;
     private static int count = 0;
     private double spawnX;
-    private BulletsManager bulletsManager;
 
     public Enemy2(int state, double x, double y, double v, double RV, long currentTime, BulletsManager bulletsManager) {
         super(state, x, y, v);
@@ -23,15 +22,16 @@ public class Enemy2 extends BaseEnemy {
         y += v * Math.sin(angle) * delta * (-1.0);
         angle += RV * delta;
         if (shootNow && bulletsManager.canShoot()) {
-            shoot();
+            shoot(angle);
             shootNow = false; // Reseta o estado de disparo
         }
     }
 
-    public void shoot(){
-        double bulletV = 300; // Velocidade do projétil
-        Bullet bullet = new Bullet(x, y, bulletV, angle, 2.0);
-        bulletsManager.addBullet(bullet);
+    public void shoot(double shoot_angles){
+        double a = shoot_angles + Math.random() * Math.PI/6 - Math.PI/12;
+        double vx = Math.cos(a);
+        double vy = Math.sin(a);
+        bulletsManager.addBullet(new Bullet(x, y, vx, vy, 2.0));
     }
 
     public static int getCount() {

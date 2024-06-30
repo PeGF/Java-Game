@@ -7,7 +7,8 @@ public class Bullet {
     protected int state;
     private double x;
     private double y;
-    private double v;
+    private double vx;
+    private double vy;
     private double angle;
     private final double radius;
 
@@ -16,7 +17,8 @@ public class Bullet {
         this.state = INACTIVE;
         this.x = x;
         this.y = y;
-        this.v = v;
+        this.vx = vx;
+        this.vy = vy;
         this.radius = radius;
     }
 
@@ -35,8 +37,8 @@ public class Bullet {
 
     public void updatePosition(long delta) {
         // Atualiza a posição da bala com base na velocidade e no tempo passado (delta)
-        x += v * Math.cos(angle) * delta;
-        y += v * Math.sin(angle) * delta;
+        x += vx * delta;
+        y += vy * delta;
     }
 
     /*

@@ -155,9 +155,6 @@ public class Main {
 
 		/* inicializações */
 
-		for(int i = 0; i < projectile_states.length; i++) projectile_states[i] = INACTIVE;
-		for(int i = 0; i < e_projectile_states.length; i++) e_projectile_states[i] = INACTIVE;
-
 		for(int i = 0; i < plano1.getX().length; i++){
 
 			plano1.setX(i, GameLib.WIDTH);
@@ -217,6 +214,7 @@ public class Main {
 
 				/* colisões player - projeteis (inimigo) */
 
+				/*
 				for(int i = 0; i < e_projectile_states.length; i++){
 
 					double dx = e_projectile_X[i] - player_X;
@@ -230,6 +228,8 @@ public class Main {
 						player_explosion_end = currentTime + 2000;
 					}
 				}
+
+				 */
 
 				/* colisões player - inimigos */
 
@@ -375,7 +375,7 @@ public class Main {
 
 							int free = findFreeIndex(e_projectile_states);
 
-							if(free < e_projectile_states.length){
+							if(free < enemy_bullets.getMax_bullets()){
 
 								e_projectile_X[free] = enemy.getX();
 								e_projectile_Y[free] = enemy.getY();
@@ -476,7 +476,7 @@ public class Main {
 				if(enemies1.size() < enemyQuantity){
 
 					enemies1.add(new Enemy1(ACTIVE, (Math.random() * (GameLib.WIDTH - 20.0) + 10.0), -10.0,
-							0.20 + Math.random() * 0.15, currentTime));
+							0.20 + Math.random() * 0.15, currentTime, enemy_bullets));
 					Enemy1 lastAddedEnemy = enemies1.get(enemies1.size() - 1);
 					lastAddedEnemy.setNext_shoot(currentTime + 500);
 					nextEnemy1 = currentTime + 500;

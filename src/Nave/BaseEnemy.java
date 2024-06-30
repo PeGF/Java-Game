@@ -9,11 +9,14 @@ public abstract class BaseEnemy {
     protected double x;
     protected double y;
     protected double v;
+    protected double bullet_vx;
+    protected double bullet_vy;
     protected double angle;
     protected double explosion_start;
     protected double explosion_end;
     protected static long next_enemy;
     protected double radius;
+    protected BulletsManager bulletsManager;
 
     public BaseEnemy(int state, double x, double y, double v) {
         this.state = state;
@@ -95,6 +98,21 @@ public abstract class BaseEnemy {
         this.y = y;
     }
 
+    public double getBullet_vx() {
+        return bullet_vx;
+    }
+
+    public void setBullet_vx(double bullet_vx) {
+        this.bullet_vx = bullet_vx;
+    }
+
+    public double getBullet_vy() {
+        return bullet_vy;
+    }
+
+    public void setBullet_vy(double bullet_vy) {
+        this.bullet_vy = bullet_vy;
+    }
 
     public void kill(double otherX, double otherY, double otherRadius) {
         double dx = otherX - x;

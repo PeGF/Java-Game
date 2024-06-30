@@ -81,7 +81,7 @@ public class Player {
 
     public void shoot(){
         if(canShoot()){
-            bullets.add(new Bullet(x, y, 0, 1, 5)); //projetil nao se move no eixo x
+            bullets.add(new Bullet(x, y, 1, 0)); //projetil nao se move no eixo x
             proximo_tiro = System.currentTimeMillis() + 500; //0.5s de intervalo
         }
     }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BulletsManager {
-    private int max_bullets;
+    private final int max_bullets;
     private List<Bullet> bullets;
 
     public BulletsManager(int max_bullets) {
@@ -22,13 +22,15 @@ public class BulletsManager {
         }
     }
 
-    public void updateBullets(long delta, int width, int height) {
+    public void updateBullets(int bullet_vx, int bullet_vy, long delta, int width, int height) {
         List<Bullet> bulletsToRemove = new ArrayList<>();
         for (Bullet bullet : bullets) {
-            bullet.updatePosition(delta);
             // Verifica se o projétil saiu da tela (exemplo simplificado)
             if (bullet.getX() < 0 || bullet.getX() > width || bullet.getY() < 0 || bullet.getY() > height) {
                 bulletsToRemove.add(bullet);
+            }
+            else{
+                bullet.updatePosition(delta);
             }
         }
         bullets.removeAll(bulletsToRemove);
@@ -38,4 +40,7 @@ public class BulletsManager {
         return bullets;
     }
 
+    public int getMax_bullets() {
+        return max_bullets;
+    }
 }
