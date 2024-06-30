@@ -114,6 +114,14 @@ public abstract class BaseEnemy {
         this.bullet_vy = bullet_vy;
     }
 
+    public BulletsManager getBulletsManager() {
+        return bulletsManager;
+    }
+
+    public void setBulletsManager(BulletsManager bulletsManager) {
+        this.bulletsManager = bulletsManager;
+    }
+
     public void kill(double otherX, double otherY, double otherRadius) {
         double dx = otherX - x;
         double dy = otherY - y;

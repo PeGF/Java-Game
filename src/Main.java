@@ -1,7 +1,5 @@
-import Nave.BaseEnemy;
-import Nave.BulletsManager;
-import Nave.Enemy1;
-import Nave.Enemy2;
+import Nave.*;
+
 import java.util.Iterator;
 
 import java.awt.Color;
@@ -329,21 +327,9 @@ public class Main {
 
 			/* projeteis (inimigos) */
 
-			for(int i = 0; i < e_projectile_states.length; i++){
+			for(Bullet bullet : enemy_bullets.getBullets()){
 
-				if(e_projectile_states[i] == ACTIVE){
-
-					/* verificando se projétil saiu da tela */
-					if(e_projectile_Y[i] > GameLib.HEIGHT) {
-
-						e_projectile_states[i] = INACTIVE;
-					}
-					else {
-
-						e_projectile_X[i] += e_projectile_VX[i] * delta;
-						e_projectile_Y[i] += e_projectile_VY[i] * delta;
-					}
-				}
+				bullet.updatePosition(delta);
 			}
 
 			/* inimigos tipo 1 */
@@ -371,24 +357,16 @@ public class Main {
 
 						enemy.updatePosition(delta);
 
-						if(currentTime > enemy.getNext_shoot() && enemy.getY() < player_Y){
-
-							int free = findFreeIndex(e_projectile_states);
-
-							if(free < enemy_bullets.getMax_bullets()){
-
-								e_projectile_X[free] = enemy.getX();
-								e_projectile_Y[free] = enemy.getY();
-								e_projectile_VX[free] = Math.cos(enemy.getAngle()) * 0.45;
-								e_projectile_VY[free] = Math.sin(enemy.getAngle()) * 0.45 * (-1.0);
-								e_projectile_states[free] = 1;
-
+						if (currentTime > enemy.getNext_shoot() && enemy.getY() < player_Y) {
+							if (enemy_bullets.canShoot()) {
+								enemy.shoot(enemy.getAngle()); // Angulo de disparo, pode ser ajustado conforme necessário
 								enemy.setNext_shoot((long) (currentTime + 200 + Math.random() * 500));
 							}
 						}
 					}
 				}
 			}
+			enemy_bullets.updateBullets(delta, GameLib.WIDTH, GameLib.HEIGHT);
 
 			/* inimigos tipo 2 */
 
@@ -444,24 +422,11 @@ public class Main {
 
 
 							double [] angles = { Math.PI/2 + Math.PI/8, Math.PI/2, Math.PI/2 - Math.PI/8 };
-							int [] freeArray = findFreeIndex(e_projectile_states, angles.length);
 
-							for(int k = 0; k < freeArray.length; k++){
+							for(double angle : angles){
 
-								int free = freeArray[k];
-
-								if(free < e_projectile_states.length){
-
-									double a = angles[k] + Math.random() * Math.PI/6 - Math.PI/12;
-									double vx = Math.cos(a);
-									double vy = Math.sin(a);
-
-									e_projectile_X[free] = enemy.getX();
-									e_projectile_Y[free] = enemy.getY();
-									e_projectile_VX[free] = vx * 0.30;
-									e_projectile_VY[free] = vy * 0.30;
-									e_projectile_states[free] = 1;
-
+								if (enemy.getBulletsManager().canShoot()) {
+									enemy.shoot(angle);
 								}
 							}
 							enemy.setShootNow(false);
@@ -608,12 +573,12 @@ public class Main {
 
 			/* desenhando projeteis (inimigos) */
 
-			for(int i = 0; i < e_projectile_states.length; i++){
+			for(Bullet bullet : enemy_bullets.getBullets()){
 
-				if(e_projectile_states[i] == ACTIVE){
+				if(bullet.getState() == 1){
 
 					GameLib.setColor(Color.RED);
-					GameLib.drawCircle(e_projectile_X[i], e_projectile_Y[i], e_projectile_radius);
+					GameLib.drawCircle(bullet.getX(), bullet.getY(), bullet.getRadius());
 				}
 			}
 

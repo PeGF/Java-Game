@@ -14,7 +14,7 @@ public class Bullet {
 
 
     public Bullet(double x, double y, double vx, double vy, double radius) {
-        this.state = INACTIVE;
+        this.state = ACTIVE;
         this.x = x;
         this.y = y;
         this.vx = vx;

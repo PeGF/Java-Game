@@ -16,9 +16,9 @@ public class Player {
     private double comeco_explosao;   //instante do inicio da explosão
     private double final_explosao;      //instante do fim da explosão
     private long proximo_tiro;      //instante a partir do qual pode haver um próximo tiro
-    private final ArrayList<Bullet> bullets;
+    private final BulletsManager bulletsManager;
 
-    public Player(double x, double y){
+    public Player(double x, double y, BulletsManager bulletsManager){
         this.state = ACTIVE;
 
         this.x = x / 2;
@@ -30,7 +30,7 @@ public class Player {
         this.comeco_explosao = 0;
         this.final_explosao = 0;
         this.proximo_tiro = System.currentTimeMillis();
-        this.bullets = new ArrayList<>();
+        this.bulletsManager = bulletsManager;
 
     }
     public int getState(){ return state; }
@@ -60,7 +60,6 @@ public class Player {
     public long getNextShot() { return proximo_tiro; }
     public void setNextShot(long nextShot) { this.proximo_tiro = nextShot; }
 
-    public List<Bullet> getBullets() {return bullets;}
 
     //ações
 
@@ -81,15 +80,13 @@ public class Player {
 
     public void shoot(){
         if(canShoot()){
-            bullets.add(new Bullet(x, y, 1, 0)); //projetil nao se move no eixo x
+            bulletsManager.addBullet(new Bullet(x, y, 1, 0, radius)); //projetil nao se move no eixo x
             proximo_tiro = System.currentTimeMillis() + 500; //0.5s de intervalo
         }
     }
 
-    public void update(int height, int width){
+    public void update(int height, int width, long delta){
         move();
-
-        bullets.forEach(bullet -> bullet.update(height, width));
-        bullets.removeIf(bullet -> bullet.getState() == INACTIVE);
+        bulletsManager.updateBullets(delta, width, height);
     }
 }

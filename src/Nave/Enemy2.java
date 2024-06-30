@@ -5,6 +5,7 @@ public class Enemy2 extends BaseEnemy {
     private double RV;
     private static int count = 0;
     private double spawnX;
+    private double bullet_radius;
 
     public Enemy2(int state, double x, double y, double v, double RV, long currentTime, BulletsManager bulletsManager) {
         super(state, x, y, v);
@@ -14,6 +15,7 @@ public class Enemy2 extends BaseEnemy {
         count++;
         shootNow = false;
         this.bulletsManager = bulletsManager;
+        bullet_radius = 2.0;
     }
 
     @Override
@@ -21,17 +23,13 @@ public class Enemy2 extends BaseEnemy {
         x += v * Math.cos(angle) * delta;
         y += v * Math.sin(angle) * delta * (-1.0);
         angle += RV * delta;
-        if (shootNow && bulletsManager.canShoot()) {
-            shoot(angle);
-            shootNow = false; // Reseta o estado de disparo
-        }
     }
 
     public void shoot(double shoot_angles){
         double a = shoot_angles + Math.random() * Math.PI/6 - Math.PI/12;
         double vx = Math.cos(a);
         double vy = Math.sin(a);
-        bulletsManager.addBullet(new Bullet(x, y, vx, vy, 2.0));
+        bulletsManager.addBullet(new Bullet(x, y, vx, vy, bullet_radius));
     }
 
     public static int getCount() {
@@ -64,5 +62,13 @@ public class Enemy2 extends BaseEnemy {
 
     public void setSpawnX(double spawnX) {
         this.spawnX = spawnX;
+    }
+
+    public double getBullet_radius() {
+        return bullet_radius;
+    }
+
+    public void setBullet_radius(double bullet_radius) {
+        this.bullet_radius = bullet_radius;
     }
 }

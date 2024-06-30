@@ -22,7 +22,7 @@ public class BulletsManager {
         }
     }
 
-    public void updateBullets(int bullet_vx, int bullet_vy, long delta, int width, int height) {
+    public void updateBullets(long delta, int width, int height) {
         List<Bullet> bulletsToRemove = new ArrayList<>();
         for (Bullet bullet : bullets) {
             // Verifica se o projétil saiu da tela (exemplo simplificado)
