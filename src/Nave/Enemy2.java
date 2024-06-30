@@ -27,8 +27,8 @@ public class Enemy2 extends BaseEnemy {
 
     public void shoot(double shoot_angles){
         double a = shoot_angles + Math.random() * Math.PI/6 - Math.PI/12;
-        double vx = Math.cos(a);
-        double vy = Math.sin(a);
+        double vx = Math.cos(a) * 0.3 * 0.5;
+        double vy = Math.sin(a) * 0.3 * 0.5;
         bulletsManager.addBullet(new Bullet(x, y, vx, vy, bullet_radius));
     }
 
