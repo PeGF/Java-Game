@@ -5,6 +5,7 @@ public class Bullet {
     public static final int ACTIVE = 1;
 
     protected int state;
+    public static int max_bullets;
     protected double x;
     protected double y;
     private final double vx;

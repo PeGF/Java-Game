@@ -16,7 +16,7 @@ public class Player {
     private double comeco_explosao;   //instante do inicio da explosão
     private double final_explosao;      //instante do fim da explosão
     private long proximo_tiro;      //instante a partir do qual pode haver um próximo tiro
-    private final List<Bullet> bullets;
+    private final ArrayList<Bullet> bullets;
 
     public Player(double x, double y){
         this.state = ACTIVE;

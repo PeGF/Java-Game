@@ -1,6 +1,7 @@
 import Nave.BaseEnemy;
 import Nave.Enemy1;
 import Nave.Enemy2;
+import java.util.Iterator;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -340,14 +341,14 @@ public class Main {
 
 			/* inimigos tipo 1 */
 
-			for(Enemy1 enemy : enemies1){
-
+			for(Iterator<Enemy1> iterator = enemies1.iterator(); iterator.hasNext();){
+				Enemy1 enemy = iterator.next();
 				if(enemy.getState() == EXPLODING){
 
 					if(currentTime > enemy.getExplosion_end()){
 
 						enemy.setState(INACTIVE);
-						enemies1.remove(enemy);
+						iterator.remove();
 					}
 				}
 
@@ -357,7 +358,7 @@ public class Main {
 					if(enemy.getY() > GameLib.HEIGHT + 10) {
 
 						enemy.setState(INACTIVE);
-						enemies1.remove(enemy);
+						iterator.remove();
 					}
 					else {
 
@@ -384,14 +385,14 @@ public class Main {
 
 			/* inimigos tipo 2 */
 
-			for(Enemy2 enemy : enemies2){
-
+			for(Iterator<Enemy2> iterator = enemies2.iterator(); iterator.hasNext();){
+				Enemy2 enemy = iterator.next();
 				if(enemy.getState() == EXPLODING){
 
 					if(currentTime > enemy.getExplosion_end()){
 
 						enemy.setState(INACTIVE);
-						enemies2.remove(enemy);
+						iterator.remove();
 					}
 				}
 
@@ -401,7 +402,7 @@ public class Main {
 					if(enemy.getX() < -10 || enemy.getX() > GameLib.WIDTH + 10 ) {
 
 						enemy.setState(INACTIVE);
-						enemies2.remove(enemy);
+						iterator.remove();
 					}
 					else {
 
@@ -434,6 +435,7 @@ public class Main {
 
 						if(enemy.isShootNow()){
 
+
 							double [] angles = { Math.PI/2 + Math.PI/8, Math.PI/2, Math.PI/2 - Math.PI/8 };
 							int [] freeArray = findFreeIndex(e_projectile_states, angles.length);
 
@@ -452,6 +454,7 @@ public class Main {
 									e_projectile_VX[free] = vx * 0.30;
 									e_projectile_VY[free] = vy * 0.30;
 									e_projectile_states[free] = 1;
+
 								}
 							}
 						}
@@ -460,7 +463,7 @@ public class Main {
 			}
 
 			/* verificando se novos inimigos (tipo 1) devem ser "lançados" */
-			if(currentTime >= nextEnemy1){
+			if(currentTime > nextEnemy1){
 
 				if(enemies1.size() < enemyQuantity){
 
@@ -474,13 +477,13 @@ public class Main {
 
 			/* verificando se novos inimigos (tipo 2) devem ser "lançados" */
 
-			if(currentTime >= nextEnemy2){
+			if(currentTime > nextEnemy2){
 
 
 				if(enemies2.size() < enemyQuantity){
 
 					enemies2.add(new Enemy2(ACTIVE, GameLib.WIDTH * 0.20, -10.0, 0.42, 0.0, currentTime));
-					Enemy2 lastAddedEnemy = enemies2.get(enemies1.size() - 1);
+					Enemy2 lastAddedEnemy = enemies2.get(enemies2.size() - 1);
 
 					if(Enemy2.getCount() < 10){
 
