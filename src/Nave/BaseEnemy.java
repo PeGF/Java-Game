@@ -6,14 +6,14 @@ public abstract class BaseEnemy {
     public static final int EXPLODING = 2;
 
     int state;
-    double x;
-    double y;
-    double v;
-    double angle;
-    double explosion_start;
-    double explosion_end;
-    long next_enemy;
-    double radius;
+    protected double x;
+    protected double y;
+    protected double v;
+    protected double angle;
+    protected double explosion_start;
+    protected double explosion_end;
+    protected static long next_enemy;
+    protected double radius;
 
     public BaseEnemy(int state, double x, double y, double v) {
         this.state = state;

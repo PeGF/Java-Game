@@ -6,12 +6,12 @@ public class Enemy2 extends BaseEnemy {
     public double RV;
     private static int count = 0;
 
-    public Enemy2(int state, double x, double y, double v, double angle, int width, double RV) {
+    public Enemy2(int state, double x, double y, double v, double angle, int width, double RV, long currentTime) {
         super(state, x, y, v);
         spawnX = width * 0.20;
         radius = 12.0;
         this.RV = RV;
-        next_enemy = System.currentTimeMillis() + 7000;
+        next_enemy = currentTime + 7000;
         count++;
     }
 

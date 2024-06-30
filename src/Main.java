@@ -1,4 +1,8 @@
+import Nave.BaseEnemy;
+import Nave.Enemy1;
+
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Main {
 	
@@ -87,7 +91,8 @@ public class Main {
 		double [] projectile_VY = new double[10];				// velocidades no eixo y
 
 		/* variáveis dos inimigos tipo 1 */
-		
+
+		/*
 		int [] enemy1_states = new int[10];						// estados
 		double [] enemy1_X = new double[10];					// coordenadas x
 		double [] enemy1_Y = new double[10];					// coordenadas y
@@ -99,7 +104,10 @@ public class Main {
 		long [] enemy1_nextShoot = new long[10];				// instantes do próximo tiro
 		double enemy1_radius = 9.0;								// raio (tamanho do inimigo 1)
 		long nextEnemy1 = currentTime + 2000;					// instante em que um novo inimigo 1 deve aparecer
-		
+		*/
+
+		ArrayList<Enemy1> enemies1 = new ArrayList<>();
+
 		/* variáveis dos inimigos tipo 2 */
 		
 		int [] enemy2_states = new int[10];						// estados
@@ -136,7 +144,7 @@ public class Main {
 		
 		for(int i = 0; i < projectile_states.length; i++) projectile_states[i] = INACTIVE;
 		for(int i = 0; i < e_projectile_states.length; i++) e_projectile_states[i] = INACTIVE;
-		for(int i = 0; i < enemy1_states.length; i++) enemy1_states[i] = INACTIVE;
+
 		for(int i = 0; i < enemy2_states.length; i++) enemy2_states[i] = INACTIVE;
 		
 		for(int i = 0; i < plano1.getX().length; i++){
@@ -173,7 +181,10 @@ public class Main {
 		/* 5) Espera um período de tempo (de modo que delta seja aproximadamente sempre constante).      */
 		/*                                                                                               */
 		/*************************************************************************************************/
-		
+
+		int enemy1Quantity = 10;
+		long nextEnemy1 = System.currentTimeMillis() + 2000;
+
 		while(running){
 		
 			/* Usada para atualizar o estado dos elementos do jogo    */
@@ -209,20 +220,21 @@ public class Main {
 				}
 			
 				/* colisões player - inimigos */
-							
-				for(int i = 0; i < enemy1_states.length; i++){
-					
-					double dx = enemy1_X[i] - player_X;
-					double dy = enemy1_Y[i] - player_Y;
-					double dist = Math.sqrt(dx * dx + dy * dy);
-					
-					if(dist < (player_radius + enemy1_radius) * 0.8){
-						
-						player_state = EXPLODING;
-						player_explosion_start = currentTime;
-						player_explosion_end = currentTime + 2000;
-					}
-				}
+
+
+//				for(int i = 0; i < enemy1_states.length; i++){
+//
+//					double dx = enemy1_X[i] - player_X;
+//					double dy = enemy1_Y[i] - player_Y;
+//					double dist = Math.sqrt(dx * dx + dy * dy);
+//
+//					if(dist < (player_radius + enemy1_radius) * 0.8){
+//
+//						player_state = EXPLODING;
+//						player_explosion_start = currentTime;
+//						player_explosion_end = currentTime + 2000;
+//					}
+//				}
 				
 				for(int i = 0; i < enemy2_states.length; i++){
 					
@@ -241,42 +253,44 @@ public class Main {
 			
 			/* colisões projeteis (player) - inimigos */
 			
-			for(int k = 0; k < projectile_states.length; k++){
-				
-				for(int i = 0; i < enemy1_states.length; i++){
-										
-					if(enemy1_states[i] == ACTIVE){
-					
-						double dx = enemy1_X[i] - projectile_X[k];
-						double dy = enemy1_Y[i] - projectile_Y[k];
-						double dist = Math.sqrt(dx * dx + dy * dy);
-						
-						if(dist < enemy1_radius){
-							
-							enemy1_states[i] = EXPLODING;
-							enemy1_explosion_start[i] = currentTime;
-							enemy1_explosion_end[i] = currentTime + 500;
-						}
-					}
-				}
-				
-				for(int i = 0; i < enemy2_states.length; i++){
-					
-					if(enemy2_states[i] == ACTIVE){
-						
-						double dx = enemy2_X[i] - projectile_X[k];
-						double dy = enemy2_Y[i] - projectile_Y[k];
-						double dist = Math.sqrt(dx * dx + dy * dy);
-						
-						if(dist < enemy2_radius){
-							
-							enemy2_states[i] = EXPLODING;
-							enemy2_explosion_start[i] = currentTime;
-							enemy2_explosion_end[i] = currentTime + 500;
-						}
-					}
-				}
-			}
+//			for(int k = 0; k < projectile_states.length; k++){
+//
+//				for(int i = 0; i < enemy1_states.length; i++){
+//
+//					if(enemy1_states[i] == ACTIVE){
+//
+//						double dx = enemy1_X[i] - projectile_X[k];
+//						double dy = enemy1_Y[i] - projectile_Y[k];
+//						double dist = Math.sqrt(dx * dx + dy * dy);
+//
+//						if(dist < enemy1_radius){
+//
+//							enemy1_states[i] = EXPLODING;
+//							enemy1_explosion_start[i] = currentTime;
+//							enemy1_explosion_end[i] = currentTime + 500;
+//						}
+//					}
+//				}
+
+
+
+//				for(int i = 0; i < enemy2_states.length; i++){
+//
+//					if(enemy2_states[i] == ACTIVE){
+//
+//						double dx = enemy2_X[i] - projectile_X[k];
+//						double dy = enemy2_Y[i] - projectile_Y[k];
+//						double dist = Math.sqrt(dx * dx + dy * dy);
+//
+//						if(dist < enemy2_radius){
+//
+//							enemy2_states[i] = EXPLODING;
+//							enemy2_explosion_start[i] = currentTime;
+//							enemy2_explosion_end[i] = currentTime + 500;
+//						}
+//					}
+//				}
+//			}
 				
 			/***************************/
 			/* Atualizações de estados */
@@ -322,42 +336,40 @@ public class Main {
 			
 			/* inimigos tipo 1 */
 			
-			for(int i = 0; i < enemy1_states.length; i++){
+			for(Enemy1 enemy : enemies1){
 				
-				if(enemy1_states[i] == EXPLODING){
+				if(enemy.getState() == EXPLODING){
 					
-					if(currentTime > enemy1_explosion_end[i]){
+					if(currentTime > enemy.getExplosion_end()){
 						
-						enemy1_states[i] = INACTIVE;
+						enemy.setState(INACTIVE);
 					}
 				}
 				
-				if(enemy1_states[i] == ACTIVE){
+				if(enemy.getState() == ACTIVE){
 					
 					/* verificando se inimigo saiu da tela */
-					if(enemy1_Y[i] > GameLib.HEIGHT + 10) {
+					if(enemy.getY() > GameLib.HEIGHT + 10) {
 						
-						enemy1_states[i] = INACTIVE;
+						enemy.setState(INACTIVE);
 					}
 					else {
 					
-						enemy1_X[i] += enemy1_V[i] * Math.cos(enemy1_angle[i]) * delta;
-						enemy1_Y[i] += enemy1_V[i] * Math.sin(enemy1_angle[i]) * delta * (-1.0);
-						enemy1_angle[i] += enemy1_RV[i] * delta;
+						enemy.updatePosition(delta);
 						
-						if(currentTime > enemy1_nextShoot[i] && enemy1_Y[i] < player_Y){
+						if(currentTime > enemy.getNext_shoot() && enemy.getY() < player_Y){
 																							
 							int free = findFreeIndex(e_projectile_states);
 							
 							if(free < e_projectile_states.length){
 								
-								e_projectile_X[free] = enemy1_X[i];
-								e_projectile_Y[free] = enemy1_Y[i];
-								e_projectile_VX[free] = Math.cos(enemy1_angle[i]) * 0.45;
-								e_projectile_VY[free] = Math.sin(enemy1_angle[i]) * 0.45 * (-1.0);
+								e_projectile_X[free] = enemy.getX();
+								e_projectile_Y[free] = enemy.getY();
+								e_projectile_VX[free] = Math.cos(enemy.getAngle()) * 0.45;
+								e_projectile_VY[free] = Math.sin(enemy.getAngle()) * 0.45 * (-1.0);
 								e_projectile_states[free] = 1;
 								
-								enemy1_nextShoot[i] = (long) (currentTime + 200 + Math.random() * 500);
+								enemy.setNext_shoot((long) (currentTime + 200 + Math.random() * 500));
 							}
 						}
 					}
@@ -396,7 +408,7 @@ public class Main {
 						
 						if(previousY < threshold && enemy2_Y[i] >= threshold) {
 							
-							if(enemy2_X[i] < GameLib.WIDTH / 2) enemy2_RV[i] = 0.003;
+							if(enemy2_X[i] < GameLib.WIDTH / 2.0) enemy2_RV[i] = 0.003;
 							else enemy2_RV[i] = -0.003;
 						}
 						
@@ -442,20 +454,14 @@ public class Main {
 			}
 			
 			/* verificando se novos inimigos (tipo 1) devem ser "lançados" */
-			
 			if(currentTime > nextEnemy1){
-				
-				int free = findFreeIndex(enemy1_states);
-								
-				if(free < enemy1_states.length){
-					
-					enemy1_X[free] = Math.random() * (GameLib.WIDTH - 20.0) + 10.0;
-					enemy1_Y[free] = -10.0;
-					enemy1_V[free] = 0.20 + Math.random() * 0.15;
-					enemy1_angle[free] = 3 * Math.PI / 2;
-					enemy1_RV[free] = 0.0;
-					enemy1_states[free] = ACTIVE;
-					enemy1_nextShoot[free] = currentTime + 500;
+
+				if(enemies1.size() < enemy1Quantity){
+
+					enemies1.add(new Enemy1(ACTIVE, (Math.random() * (GameLib.WIDTH - 20.0) + 10.0), -10.0,
+							0.20 + Math.random() * 0.15, currentTime));
+					Enemy1 lastAddedEnemy = enemies1.get(enemies1.size() - 1);
+					lastAddedEnemy.setNext_shoot(currentTime + 500);
 					nextEnemy1 = currentTime + 500;
 				}
 			}
@@ -603,18 +609,18 @@ public class Main {
 			
 			/* desenhando inimigos (tipo 1) */
 			
-			for(int i = 0; i < enemy1_states.length; i++){
+			for(Enemy1 enemy : enemies1){
 				
-				if(enemy1_states[i] == EXPLODING){
+				if(enemy.getState() == EXPLODING){
 					
-					double alpha = (currentTime - enemy1_explosion_start[i]) / (enemy1_explosion_end[i] - enemy1_explosion_start[i]);
-					GameLib.drawExplosion(enemy1_X[i], enemy1_Y[i], alpha);
+					double alpha = (currentTime - enemy.getExplosion_start()) / (enemy.getExplosion_end() - enemy.getExplosion_start());
+					GameLib.drawExplosion(enemy.getX(), enemy.getY(), alpha);
 				}
 				
-				if(enemy1_states[i] == ACTIVE){
+				if(enemy.getState() == ACTIVE){
 			
 					GameLib.setColor(Color.CYAN);
-					GameLib.drawCircle(enemy1_X[i], enemy1_Y[i], enemy1_radius);
+					GameLib.drawCircle(enemy.getX(), enemy.getY(), enemy.getRadius());
 				}
 			}
 			
